@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         {
             if (!isJumping)
             {
-                rig.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+                ImpulseForce(JumpForce);
                 doubleJump = true;
                 ActivateAnimationJump(true);
             }
@@ -75,11 +75,17 @@ public class Player : MonoBehaviour
             {
                 if (doubleJump)
                 {
-                    rig.AddForce(new Vector2(0f, JumpForce/2), ForceMode2D.Impulse);
+                    ImpulseForce(JumpForce/2);
                     doubleJump = false;
                 }
             }
         }
+    }
+
+    public void ImpulseForce(float jumpForce)
+    {
+        rig.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+
     }
 
     private void OnCollisionEnter2D(Collision2D col)
