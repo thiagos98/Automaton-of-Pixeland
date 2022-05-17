@@ -7,8 +7,10 @@ public class Banana : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
-
     private GameObject collected;
+
+    [SerializeField] private int bananaScore = 10;
+    
     void Start()
     {
         TryGetComponent(out boxCollider);
@@ -24,6 +26,10 @@ public class Banana : MonoBehaviour
             spriteRenderer.enabled = false;
             boxCollider.enabled = false;
             collected.SetActive(true);
+            
+            GameController.instance.AddScore(bananaScore);
+            GameController.instance.UpdateScoreText();
+            
             Destroy(gameObject, 0.2f);
         }
     }
