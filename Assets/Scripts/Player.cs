@@ -15,14 +15,13 @@ public class Player : MonoBehaviour
     private bool isJumping;
     private bool doubleJump;
 
-    // Start is called before the first frame update
+    
     private void Start()
     {
         TryGetComponent(out rig);
         TryGetComponent(out anim);
     }
-
-    // Update is called once per frame
+    
     private void Update()
     {
         Move();
