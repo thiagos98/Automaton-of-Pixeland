@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     
     private void Start()
     {
+        isJumping = false;
+        doubleJump = true;
         TryGetComponent(out rig);
         TryGetComponent(out anim);
     }
@@ -97,5 +99,11 @@ public class Player : MonoBehaviour
         {
             isJumping = true;
         }
+    }
+
+    public void Die()
+    {
+        GameController.instance.ShowGameOver();
+        Destroy(gameObject);
     }
 }
