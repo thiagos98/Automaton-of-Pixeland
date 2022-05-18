@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private bool isJumping;
     private bool doubleJump;
 
+    private bool isBlowing;
     
     private void Start()
     {
@@ -63,7 +64,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !isBlowing)
         {
             if (!isJumping)
             {
@@ -87,6 +88,12 @@ public class Player : MonoBehaviour
         rig.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
 
     }
+    
+    public void Die()
+    {
+        GameController.instance.ShowGameOver();
+        Destroy(gameObject);
+    }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -107,9 +114,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Die()
+    private void OnTriggerStay2D(Collider2D col)
     {
-        GameController.instance.ShowGameOver();
-        Destroy(gameObject);
+        if (col.gameObject.layer == LayerMask.NameToLayer("fan"))
+        {
+            isBlowing = true;
+        }
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("fan"))
+        {
+            isBlowing = false;
+        }
+    }
+
+    
 }
