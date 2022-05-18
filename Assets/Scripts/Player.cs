@@ -33,25 +33,29 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
-        transform.position += movement * Time.deltaTime * Speed;
-        ActiveAnimation();
+        // Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
+        // move o personagem em uma posicao
+        // transform.position += movement * Time.deltaTime * Speed;
+        
+        float movement = Input.GetAxis("Horizontal");
+        rig.velocity = new Vector2(movement * Speed, rig.velocity.y);
+        ActiveAnimation(movement);
     }
     
-    private void ActiveAnimation()
+    private void ActiveAnimation(float movement)
     {
-        if (Input.GetAxis("Horizontal") > 0f)
+        if (movement > 0f)
         {
             anim.SetBool("run", true);
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
-        if (Input.GetAxis("Horizontal") < 0f)
+        if (movement < 0f)
         {
             anim.SetBool("run", true);
             transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
 
-        if (Input.GetAxis("Horizontal") == 0f)
+        if (movement == 0f)
         {
             anim.SetBool("run", false);
         }
