@@ -19,6 +19,8 @@ public class MaskDude : MonoBehaviour
 
     public LayerMask layer;
 
+    private bool playerDestroyed;
+    
     void Start()
     {
         TryGetComponent(out rb);
@@ -46,13 +48,18 @@ public class MaskDude : MonoBehaviour
         {
             float height = col.contacts[0].point.y - headPoint.position.y;
 
-            if (height > 0f)
+            if (height > 0f && !playerDestroyed)
             {
                 col.gameObject.GetComponent<Player>().ImpulseForce(5f);
                 anim.SetTrigger("die");
                 speed = 0f;
                 rb.bodyType = RigidbodyType2D.Kinematic;
                 Destroy(gameObject, 0.35f);
+            }
+            else
+            {
+                playerDestroyed = true;
+                col.gameObject.GetComponent<Player>().Die();
             }
         }
     }
