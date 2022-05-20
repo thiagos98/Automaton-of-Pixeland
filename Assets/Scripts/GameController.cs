@@ -9,18 +9,26 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    private string scoreKey = "Score";
     private int Score;
-    public int highScore;
-    
+    public int CurrentScore { get; set; }
+
     public Text ScoreText;
     public Text HighScoreText;
     
     public GameObject GameOverPanel;
     public static GameController instance;
 
+    private void Awake()
+    {
+        CurrentScore = PlayerPrefs.GetInt(scoreKey);
+    }
+
     private void Start()
     {
         instance = this;
+        Score = CurrentScore;
+        UpdateScoreText();
     }
 
     public int GetScore()
@@ -31,9 +39,14 @@ public class GameController : MonoBehaviour
     {
         Score += value;
         UpdateScoreText();
-        
+        SetScore(Score);
     }
 
+    public void SetScore(int score)
+    {
+        PlayerPrefs.SetInt(scoreKey, score);
+    }
+    
     private void UpdateScoreText()
     {
         ScoreText.text = Score.ToString();
