@@ -737,8 +737,8 @@ Transform:
   - {fileID: 870595097}
   - {fileID: 994976300}
   - {fileID: 1632975424}
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_Father: {fileID: 726618005}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &683682244
 PrefabInstance:
@@ -946,7 +946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 726618005}
   m_Layer: 0
-  m_Name: coletaveis
+  m_Name: Collectables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -960,9 +960,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726618004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24647291, y: -1.515324, z: -1.2146336}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1371760490}
+  - {fileID: 1146024456}
+  - {fileID: 676145480}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3378,8 +3381,8 @@ Transform:
   - {fileID: 881844788}
   - {fileID: 1474561078}
   - {fileID: 2110687782}
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_Father: {fileID: 726618005}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1221723401
 PrefabInstance:
@@ -4060,8 +4063,8 @@ Transform:
   - {fileID: 1279071335}
   - {fileID: 683682245}
   - {fileID: 272591520}
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 726618005}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1401089143
 PrefabInstance:

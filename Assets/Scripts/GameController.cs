@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     private int Score;
+    public int highScore;
+    
     public Text ScoreText;
+    public Text HighScoreText;
+    
     public GameObject GameOverPanel;
     public static GameController instance;
 
@@ -26,6 +31,7 @@ public class GameController : MonoBehaviour
     {
         Score += value;
         UpdateScoreText();
+        
     }
 
     private void UpdateScoreText()
