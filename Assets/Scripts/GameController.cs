@@ -25,9 +25,10 @@ public class GameController : MonoBehaviour
     public void AddScore(int value)
     {
         Score += value;
+        UpdateScoreText();
     }
-    
-    public void UpdateScoreText()
+
+    private void UpdateScoreText()
     {
         ScoreText.text = Score.ToString();
     }
@@ -45,6 +46,11 @@ public class GameController : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GoToScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
     public void NextLevel()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - score
   - trap
+  - Collectable
   layers:
   - Default
   - TransparentFX

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Banana : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
-    private GameObject collected;
+    public GameObject collected;
 
     [SerializeField] private int bananaScore = 10;
     
@@ -15,7 +16,6 @@ public class Banana : MonoBehaviour
     {
         TryGetComponent(out boxCollider);
         TryGetComponent(out spriteRenderer);
-        collected = transform.GetChild(0).gameObject;
     }
     
 
@@ -23,14 +23,13 @@ public class Banana : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            spriteRenderer.enabled = false;
-            boxCollider.enabled = false;
-            collected.SetActive(true);
+            //spriteRenderer.enabled = false;
+            //boxCollider.enabled = false;
             
+            Instantiate(collected, transform.position, quaternion.identity);
+            Destroy(gameObject);
+
             GameController.instance.AddScore(bananaScore);
-            GameController.instance.UpdateScoreText();
-            
-            Destroy(gameObject, 0.2f);
         }
     }
 }
