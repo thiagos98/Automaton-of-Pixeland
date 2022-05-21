@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Trampoline : MonoBehaviour
 {
-    private Animator anim;
     [SerializeField] private float bounceForce = 10f;
+
+    private Animator anim;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         TryGetComponent(out anim);
     }

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    private string scoreKey = "Score";
-    private int Score;
-    public int CurrentScore { get; set; }
+    public static GameController instance;
 
     public Text ScoreText;
-    
+
     public GameObject GameOverPanel;
-    public static GameController instance;
+    private int Score;
+    private readonly string scoreKey = "Score";
+    public int CurrentScore { get; set; }
 
     private void Awake()
     {
@@ -34,6 +29,7 @@ public class GameController : MonoBehaviour
     {
         return Score;
     }
+
     public void AddScore(int value)
     {
         Score += value;
@@ -44,7 +40,7 @@ public class GameController : MonoBehaviour
     {
         PlayerPrefs.SetInt(scoreKey, score);
     }
-    
+
     private void UpdateScoreText()
     {
         ScoreText.text = Score.ToString();
@@ -74,12 +70,8 @@ public class GameController : MonoBehaviour
     {
         SetScore(Score);
         if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-        {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
         else
-        {
             SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
-        }
     }
 }

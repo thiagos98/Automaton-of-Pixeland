@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MaskDude : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Animator anim;
-
     public float speed;
 
     public Transform rightCol;
@@ -15,20 +9,22 @@ public class MaskDude : MonoBehaviour
 
     public Transform headPoint;
 
+    public LayerMask layer;
+    private Animator anim;
+
     private bool colliding;
 
-    public LayerMask layer;
-
     private bool playerDestroyed;
-    
-    void Start()
+    private Rigidbody2D rb;
+
+    private void Start()
     {
         TryGetComponent(out rb);
         TryGetComponent(out anim);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);
 
@@ -36,9 +32,8 @@ public class MaskDude : MonoBehaviour
 
         if (colliding)
         {
-            transform.localScale = new Vector2(transform.localScale.x*-1f, transform.localScale.y);
+            transform.localScale = new Vector2(transform.localScale.x * -1f, transform.localScale.y);
             speed *= -1f;
-            
         }
     }
 
@@ -46,7 +41,7 @@ public class MaskDude : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            float height = col.contacts[0].point.y - headPoint.position.y;
+            var height = col.contacts[0].point.y - headPoint.position.y;
 
             if (height > 0f && !playerDestroyed)
             {

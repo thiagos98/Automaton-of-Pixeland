@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HighScore : MonoBehaviour
@@ -16,9 +13,7 @@ public class HighScore : MonoBehaviour
 
     private void UpdateHighScore()
     {
-        if(PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore"))
-        {
+        if (PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore"))
             PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score"));
-        }
     }
 }

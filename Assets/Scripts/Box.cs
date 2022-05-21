@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Box : MonoBehaviour
 {
     public float bounceForce = 10f;
     public bool isUp;
 
-    private Animator anim;
-
     public int health = 5;
     public GameObject effect;
+
+    private Animator anim;
+
     private void Start()
     {
         anim = GetComponentInParent<Animator>();
@@ -19,7 +17,8 @@ public class Box : MonoBehaviour
 
     private void Update()
     {
-        if(health <= 0){
+        if (health <= 0)
+        {
             Instantiate(effect, transform.position, Quaternion.identity);
             Destroy(transform.parent.gameObject);
         }
@@ -30,13 +29,9 @@ public class Box : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             if (isUp)
-            {
                 col.gameObject.GetComponent<Player>().ImpulseForce(bounceForce);
-            }
             else
-            {
                 col.gameObject.GetComponent<Player>().ImpulseForce(-bounceForce);
-            }
 
             health -= 1;
             anim.SetTrigger("hit");
