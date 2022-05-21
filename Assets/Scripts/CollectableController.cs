@@ -15,7 +15,7 @@ public class CollectableController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.CompareTag("Player"))
         {
             GameController.instance.AddScore(FruitScore);
             Instantiate(collectedEffect, transform.position, Quaternion.identity);

@@ -23,8 +23,6 @@ public class Banana : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            //spriteRenderer.enabled = false;
-            //boxCollider.enabled = false;
             
             Instantiate(collected, transform.position, quaternion.identity);
             Destroy(gameObject);

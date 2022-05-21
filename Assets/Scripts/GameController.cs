@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
     public int CurrentScore { get; set; }
 
     public Text ScoreText;
-    public Text HighScoreText;
     
     public GameObject GameOverPanel;
     public static GameController instance;
@@ -39,7 +38,6 @@ public class GameController : MonoBehaviour
     {
         Score += value;
         UpdateScoreText();
-        SetScore(Score);
     }
 
     public void SetScore(int score)
@@ -74,6 +72,7 @@ public class GameController : MonoBehaviour
 
     public void NextLevel()
     {
+        SetScore(Score);
         if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
