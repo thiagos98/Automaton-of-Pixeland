@@ -1744,7 +1744,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PIXEL ADVENTURE 1
+  m_Text: PIXEL ADVENTURE
 --- !u!222 &773325491
 CanvasRenderer:
   m_ObjectHideFlags: 0
