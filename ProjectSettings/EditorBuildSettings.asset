@@ -6,24 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/mainMenu.unity
+    path: Assets/Scenes/Gerais/mainMenu.unity
     guid: 0a5cd06f730186444a0cc94897911990
   - enabled: 1
-    path: Assets/Scenes/Nivel1.unity
+    path: Assets/Scenes/Fases/Nivel1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Nivel2.unity
+    path: Assets/Scenes/Fases/Nivel2.unity
     guid: f2d4340eb54a7f44486bf2a27b7611eb
   - enabled: 1
-    path: Assets/Scenes/Nivel3.unity
+    path: Assets/Scenes/Fases/Nivel3.unity
     guid: 5113c4ec2180c64498e7d7bc5e4c0474
   - enabled: 1
-    path: Assets/Scenes/Nivel4.unity
+    path: Assets/Scenes/Fases/Nivel4.unity
     guid: 82547641b3e80704cba3c63316307065
   - enabled: 1
-    path: Assets/Scenes/Nivel5.unity
+    path: Assets/Scenes/Fases/Nivel5.unity
     guid: 56eb4161d068e764e9335900729817c0
   - enabled: 1
-    path: Assets/Scenes/Credits.unity
+    path: Assets/Scenes/Gerais/Credits.unity
     guid: d89eed0b14030f8419d702011c6e8aa1
   m_configObjects: {}
