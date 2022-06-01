@@ -1,32 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class SpawnerCollectables : MonoBehaviour
 {
     public Tilemap tilemap;
-    
-    public int numberToSpawn;
     public List<GameObject> spawnPool;
-    [FormerlySerializedAs("quad")] public GameObject background;
+    public GameObject background;
 
     private SpriteRenderer sr;
+    //public int[] spawnsToLevels;
     
-    void Start()
+    private void Start()
     {
         sr = background.GetComponent<SpriteRenderer>();
+        //InitializeNumberCollectiblesPerLevel();
         SpawnObjects();
     }
 
-    public void SpawnObjects()
+    private void SpawnObjects()
     {
         DestroyObjects();
         int randomItem = 0;
         GameObject toSpawn;
         
         Vector2 screenPos;
+        //int numberToSpawn = spawnsToLevels[SceneManager.GetActiveScene().buildIndex - 1];
+        int numberToSpawn = Random.Range(1, 11);
         
         for (int i = 0; i < numberToSpawn; i++)
         {
@@ -55,26 +58,36 @@ public class SpawnerCollectables : MonoBehaviour
 
     private Vector2 GenerateNewPosition()
     {
-        float screenX, screenY;
-
+        
         var bounds = sr.bounds;
-        screenX = Random.Range(bounds.min.x, bounds.max.x);
-        screenY = Random.Range(bounds.min.y, bounds.max.y);
+        float screenX = Random.Range(bounds.min.x, bounds.max.x);
+        float screenY = Random.Range(bounds.min.y, bounds.max.y);
         
         return new Vector2(screenX, screenY);
     }
 
     private void DestroyObjects()
     {
-        foreach (GameObject o in GameObject.FindGameObjectsWithTag("Collectable"))
+        foreach (var obj in GameObject.FindGameObjectsWithTag("Collectable"))
         {
-            Destroy(o);
+            Destroy(obj);
         }
     }
     
     private bool VerifyCollision(Vector2 posCollectable)
     {
-        var collided = tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(posCollectable);
-        return collided;
+        return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(posCollectable);
     }
+
+    /*
+    private void InitializeNumberCollectiblesPerLevel()
+    {
+        spawnsToLevels = new int[SceneManager.sceneCountInBuildSettings - 2];
+        for (var i = 0; i < spawnsToLevels.Length; i++)
+        {
+            spawnsToLevels[i] = Random.Range(1, 10);
+            Debug.Log(spawnsToLevels[i]);
+        }
+    }
+    */
 }
