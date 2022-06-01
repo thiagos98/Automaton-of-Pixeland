@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
-public class Spawner : MonoBehaviour
+public class SpawnerCollectables : MonoBehaviour
 {
     public Tilemap tilemap;
     
