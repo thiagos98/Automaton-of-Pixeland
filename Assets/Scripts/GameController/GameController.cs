@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class GameController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         CurrentScore = PlayerPrefs.GetInt(scoreKey);
+        
+        LoadFromJson();
     }
 
     private void Start()
@@ -23,6 +26,12 @@ public class GameController : MonoBehaviour
         instance = this;
         Score = CurrentScore;
         UpdateScoreText();
+    }
+    
+    public void LoadFromJson()
+    {
+        string json = File.ReadAllText(Application.dataPath + "/Resources/Files/Input.json");
+        PlayerPrefs.SetString("CollectablesPerLevel", json);
     }
 
     public int GetScore()
