@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
     public void LoadFromJson()
     {
         string json = File.ReadAllText(Application.dataPath + "/Resources/Files/Input.json");
-        PlayerPrefs.SetString("CollectablesPerLevel", json);
+        PlayerPrefs.SetString("InputLevel", json);
     }
 
     public int GetScore()

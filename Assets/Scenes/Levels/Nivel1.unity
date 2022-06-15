@@ -2869,7 +2869,7 @@ PrefabInstance:
     - target: {fileID: 8659694988588462478, guid: 1b3220dea229e40478a87751525c4b7f,
         type: 3}
       propertyPath: m_Name
-      value: SpawnerCollectables
+      value: SpawnerObjects
       objectReference: {fileID: 0}
     - target: {fileID: 8659694988588462479, guid: 1b3220dea229e40478a87751525c4b7f,
         type: 3}

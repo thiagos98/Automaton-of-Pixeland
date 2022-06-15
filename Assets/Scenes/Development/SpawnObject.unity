@@ -499,7 +499,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 829842978}
-        m_MethodName: SpawnObjects
+        m_MethodName: SpawnCollectables
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

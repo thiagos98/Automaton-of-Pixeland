@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8659694988588462464}
   - component: {fileID: 8659694988588462479}
   m_Layer: 0
-  m_Name: SpawnerCollectables
+  m_Name: SpawnerObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 0}
-  spawnPool:
+  spawnPoolCollectables:
   - {fileID: 2126453898011698199, guid: 02738d0c24eea0d4881a935c6caf583c, type: 3}
+  spawnPoolEnemies:
+  - {fileID: 1609098593221884638, guid: 8a90a2ea10aa054419d230c69be9ec93, type: 3}
   background: {fileID: 0}
+  spawnsCollectableToLevels: 
+  spawnsEnemyToLevels: 
+  rawInput: []
