@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
@@ -78,9 +79,10 @@ public class GameController : MonoBehaviour
     public void NextLevel()
     {
         SetScore(Score);
-        if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        else
-            SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
+        RestartGame();
+        // if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
+        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // else
+        //     SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
     }
 }
