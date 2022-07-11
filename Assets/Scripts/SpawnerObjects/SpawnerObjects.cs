@@ -18,26 +18,32 @@ public class SpawnerObjects : MonoBehaviour
     public int[] spawnsCollectableToLevels;
     public int[] spawnsEnemyToLevels;
     public string[] rawInput;
-    
+    public int currentLevel;
+    private int lenghtGame;
     private void Start()
     {
         sr = background.GetComponent<SpriteRenderer>();
+        ConvertJsonToInputData();
         InitializeObjectsPerLevel();
         Spawn(spawnPoolCollectables, spawnsCollectableToLevels, "Collectable");
         Spawn(spawnPoolEnemies, spawnsEnemyToLevels, "enemy");
     }
     
     #region General
-    private void InitializeObjectsPerLevel()
+    private void ConvertJsonToInputData()
     {
         string json = PlayerPrefs.GetString("InputLevel");
         InputData data = JsonUtility.FromJson<InputData>(json);
         rawInput = data.input;
-
-        spawnsCollectableToLevels = new int[rawInput.Length];
-        spawnsEnemyToLevels = new int[rawInput.Length];
+        lenghtGame = rawInput.Length;
+        PlayerPrefs.SetInt("LenghtGame", lenghtGame);
+    }
+    private void InitializeObjectsPerLevel()
+    {
+        spawnsCollectableToLevels = new int[lenghtGame];
+        spawnsEnemyToLevels = new int[lenghtGame];
         
-        for (int i = 0; i < rawInput.Length; i++)
+        for (int i = 0; i < lenghtGame; i++)
         {
             spawnsCollectableToLevels[i] = int.Parse(rawInput[i][0].ToString());
             spawnsEnemyToLevels[i] = int.Parse(rawInput[i][1].ToString());
@@ -63,18 +69,16 @@ public class SpawnerObjects : MonoBehaviour
     private void Spawn(IReadOnlyList<GameObject> pool, IReadOnlyList<int> spawnToLevels, string tag)
     {
         DestroyObjects(tag);
-        int randomItem = 0;
-        GameObject toSpawn;
-        
-        Vector2 screenPos;
-        int numberToSpawn = spawnToLevels[SceneManager.GetActiveScene().buildIndex - 1];
+        currentLevel = Scenes.GetScene();
+
+        int numberToSpawn = spawnToLevels[currentLevel];
 
         for (int i = 0; i < numberToSpawn; i++)
         {
-            randomItem = Random.Range(0, pool.Count);
-            toSpawn = pool[randomItem];
+            var randomItem = Random.Range(0, pool.Count);
+            var toSpawn = pool[randomItem];
 
-            screenPos = GenerateNewPosition();
+            var screenPos = GenerateNewPosition();
             var cantInstantiate = VerifyCollision(screenPos);
             if(!cantInstantiate)
             {

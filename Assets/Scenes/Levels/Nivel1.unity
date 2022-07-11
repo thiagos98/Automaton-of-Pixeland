@@ -1315,7 +1315,6 @@ GameObject:
   - component: {fileID: 972703956}
   - component: {fileID: 972703955}
   - component: {fileID: 972703957}
-  - component: {fileID: 972703958}
   m_Layer: 8
   m_Name: ground
   m_TagString: Untagged
@@ -2610,18 +2609,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!114 &972703958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972703953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0fccd0a415cbd943865fe95ead420fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1051170277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,7 +2700,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1279500684}
   - component: {fileID: 1279500685}
-  - component: {fileID: 1279500686}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -2749,18 +2735,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 6366461574006126226}
   GameOverPanel: {fileID: 6366461574006126225}
---- !u!114 &1279500686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279500683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc699c4855840e499935cea80629c5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1321500290
 PrefabInstance:
   m_ObjectHideFlags: 0

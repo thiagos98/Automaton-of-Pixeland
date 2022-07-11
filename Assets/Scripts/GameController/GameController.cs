@@ -12,13 +12,13 @@ public class GameController : MonoBehaviour
 
     public GameObject GameOverPanel;
     private int Score;
+    
     private readonly string scoreKey = "Score";
     public int CurrentScore { get; set; }
 
     private void Awake()
     {
         CurrentScore = PlayerPrefs.GetInt(scoreKey);
-        
         LoadFromJson();
     }
 
@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
         Score = CurrentScore;
         UpdateScoreText();
     }
-    
+
     public void LoadFromJson()
     {
         string json = File.ReadAllText(Application.dataPath + "/Resources/Files/Input.json");
@@ -85,4 +85,6 @@ public class GameController : MonoBehaviour
         // else
         //     SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
     }
+    
+   
 }
