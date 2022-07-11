@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
@@ -11,13 +12,13 @@ public class GameController : MonoBehaviour
 
     public GameObject GameOverPanel;
     private int Score;
+    
     private readonly string scoreKey = "Score";
     public int CurrentScore { get; set; }
 
     private void Awake()
     {
         CurrentScore = PlayerPrefs.GetInt(scoreKey);
-        
         LoadFromJson();
     }
 
@@ -27,7 +28,7 @@ public class GameController : MonoBehaviour
         Score = CurrentScore;
         UpdateScoreText();
     }
-    
+
     public void LoadFromJson()
     {
         string json = File.ReadAllText(Application.dataPath + "/Resources/Files/Input.json");
@@ -78,9 +79,12 @@ public class GameController : MonoBehaviour
     public void NextLevel()
     {
         SetScore(Score);
-        if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        else
-            SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
+        RestartGame();
+        // if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
+        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        // else
+        //     SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
     }
+    
+   
 }
