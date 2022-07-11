@@ -22,6 +22,11 @@ public class SpawnerObjects : MonoBehaviour
     private int lenghtGame;
     private void Start()
     {
+        ExecuteScript();
+    }
+
+    public void ExecuteScript()
+    {
         sr = background.GetComponent<SpriteRenderer>();
         ConvertJsonToInputData();
         InitializeObjectsPerLevel();

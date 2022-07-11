@@ -61,30 +61,20 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // iniciar na primeira fase
     }
 
-    public void ShowGameOver()
+    public void SetGameOver(bool value)
     {
-        GameOverPanel.SetActive(true);
+        GameOverPanel.SetActive(value);
     }
 
-    public void RestartGame()
+    public void RestartGame(bool value)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SetScore(Score);
+        FindObjectOfType<Player>().Live();
+        FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
     }
 
     public void GoToScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
-
-    public void NextLevel()
-    {
-        SetScore(Score);
-        RestartGame();
-        // if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        // else
-        //     SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
-    }
-    
-   
 }
