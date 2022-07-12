@@ -15,9 +15,11 @@ public class GameController : MonoBehaviour
     
     private readonly string scoreKey = "Score";
     public int CurrentScore { get; set; }
+    private int currentLevel;
 
     private void Awake()
     {
+        currentLevel = 0;
         CurrentScore = PlayerPrefs.GetInt(scoreKey);
         LoadFromJson();
     }
@@ -61,30 +63,30 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // iniciar na primeira fase
     }
 
-    public void ShowGameOver()
+    public void SetGameOver(bool value)
     {
-        GameOverPanel.SetActive(true);
+        GameOverPanel.SetActive(value);
     }
 
-    public void RestartGame()
+    public void ReloadGame(bool value)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SetScore(Score);
+        FindObjectOfType<Player>().Live();
+        FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
+    }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
+    }
+    
+    public void AddCurrentLevel()
+    {
+        currentLevel += 1;
     }
 
     public void GoToScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
     }
-
-    public void NextLevel()
-    {
-        SetScore(Score);
-        RestartGame();
-        // if (SceneManager.GetActiveScene().buildIndex < SceneManager.sceneCountInBuildSettings - 1)
-        //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        // else
-        //     SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings - SceneManager.sceneCountInBuildSettings);
-    }
-    
-   
 }

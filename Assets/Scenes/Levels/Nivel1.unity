@@ -11115,6 +11115,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1279500685}
+    - target: {fileID: 7894319116851500278, guid: 2a1aa3e33d9090940b8022fb277c7a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7894319116851500278, guid: 2a1aa3e33d9090940b8022fb277c7a24,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadGame
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a1aa3e33d9090940b8022fb277c7a24, type: 3}
 --- !u!1 &6366461574006126225 stripped

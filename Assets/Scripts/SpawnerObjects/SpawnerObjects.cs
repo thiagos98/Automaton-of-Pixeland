@@ -18,9 +18,13 @@ public class SpawnerObjects : MonoBehaviour
     public int[] spawnsCollectableToLevels;
     public int[] spawnsEnemyToLevels;
     public string[] rawInput;
-    public int currentLevel;
     private int lenghtGame;
     private void Start()
+    {
+        ExecuteScript();
+    }
+
+    public void ExecuteScript()
     {
         sr = background.GetComponent<SpriteRenderer>();
         ConvertJsonToInputData();
@@ -69,10 +73,8 @@ public class SpawnerObjects : MonoBehaviour
     private void Spawn(IReadOnlyList<GameObject> pool, IReadOnlyList<int> spawnToLevels, string tag)
     {
         DestroyObjects(tag);
-        currentLevel = Scenes.GetScene();
 
-        int numberToSpawn = spawnToLevels[currentLevel];
-
+        int numberToSpawn = spawnToLevels[GameController.instance.GetCurrentLevel()];
         for (int i = 0; i < numberToSpawn; i++)
         {
             var randomItem = Random.Range(0, pool.Count);
