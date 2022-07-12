@@ -8,7 +8,15 @@ public class NextLevelPoint : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            GameController.instance.RestartGame(true);
+            GameController.instance.AddCurrentLevel();
+            if (GameController.instance.GetCurrentLevel() < PlayerPrefs.GetInt("LenghtGame"))
+            {
+                GameController.instance.ReloadGame(true);    
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings-1); // Credits Scene
+            }
         }
     }
 }

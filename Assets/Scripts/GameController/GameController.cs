@@ -15,9 +15,11 @@ public class GameController : MonoBehaviour
     
     private readonly string scoreKey = "Score";
     public int CurrentScore { get; set; }
+    private int currentLevel;
 
     private void Awake()
     {
+        currentLevel = 0;
         CurrentScore = PlayerPrefs.GetInt(scoreKey);
         LoadFromJson();
     }
@@ -66,11 +68,21 @@ public class GameController : MonoBehaviour
         GameOverPanel.SetActive(value);
     }
 
-    public void RestartGame(bool value)
+    public void ReloadGame(bool value)
     {
         SetScore(Score);
         FindObjectOfType<Player>().Live();
         FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
+    }
+
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
+    }
+    
+    public void AddCurrentLevel()
+    {
+        currentLevel += 1;
     }
 
     public void GoToScene(string sceneName)
