@@ -123,7 +123,13 @@ public class Player : MonoBehaviour
     {
         deathSoundEffect.Play();
         sr.enabled = false;
-        GameController.instance.ShowGameOver();
-        Destroy(gameObject, 2.1f);
+        GameController.instance.SetGameOver(true);
+    }
+
+    public void Live()
+    {
+        sr.enabled = true;
+        transform.position = new Vector3(-6.76f, -3.63f, 0f);
+        GameController.instance.SetGameOver(false);
     }
 }

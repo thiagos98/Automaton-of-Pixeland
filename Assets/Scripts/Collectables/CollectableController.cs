@@ -8,7 +8,7 @@ public class CollectableController : MonoBehaviour
 
     private void Start()
     {
-        collectedEffect = Resources.Load("Prefabs/coletavel") as GameObject;
+        collectedEffect = Resources.Load("Prefabs/Collectables/coletavel") as GameObject;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -17,8 +17,9 @@ public class CollectableController : MonoBehaviour
         {
             Destroy(col.gameObject);
             GameController.instance.AddScore(FruitScore);
-            Instantiate(collectedEffect, transform.position, Quaternion.identity);
+            var collectedEffectGameObject = Instantiate(collectedEffect, transform.position, Quaternion.identity);
             collectSoundEffect.Play();
+            Destroy(collectedEffectGameObject, 1f);
         }
     }
 }
