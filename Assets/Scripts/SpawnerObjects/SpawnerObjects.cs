@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class SpawnerObjects : MonoBehaviour
@@ -54,9 +49,9 @@ public class SpawnerObjects : MonoBehaviour
         }
     }
     
-    private void DestroyObjects(string tag)
+    private void DestroyObjects(string tagValue)
     {
-        foreach (var obj in GameObject.FindGameObjectsWithTag(tag))
+        foreach (var obj in GameObject.FindGameObjectsWithTag(tagValue))
         {
             Destroy(obj);
         }
@@ -70,9 +65,9 @@ public class SpawnerObjects : MonoBehaviour
     #endregion
     
     # region Spawning
-    private void Spawn(IReadOnlyList<GameObject> pool, IReadOnlyList<int> spawnToLevels, string tag)
+    private void Spawn(IReadOnlyList<GameObject> pool, IReadOnlyList<int> spawnToLevels, string tagValue)
     {
-        DestroyObjects(tag);
+        DestroyObjects(tagValue);
 
         int numberToSpawn = spawnToLevels[GameController.instance.GetCurrentLevel()];
         for (int i = 0; i < numberToSpawn; i++)
