@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
@@ -14,10 +15,10 @@ namespace TilesGenerators
         public const int Width = 65;
         public const int Height = 35;
         
-        public const float ChanceToStartAlive = 0.4f;
-        [FormerlySerializedAs("DeathLimit")] public int deathLimit = 4;
+        public const float ChanceToStartAlive = 0.3f;
+        [FormerlySerializedAs("DeathLimit")] public int deathLimit = 3;
         [FormerlySerializedAs("BirthLimit")] public int birthLimit = 3;
-        [FormerlySerializedAs("NumberOfSteps")] public int numberOfSteps = 3;
+        [FormerlySerializedAs("NumberOfSteps")] public int numberOfSteps = 5;
 
         private void Start()
         {
@@ -37,12 +38,13 @@ namespace TilesGenerators
         public void GenerateMap()
         {
             bool[,] cellmap = new bool[Width, Height];
+            cellmap = InitialiseMap(cellmap, true); // Resetar o mapa com todas as celulas mortas
             cellmap = InitialiseMap(cellmap);
             for (int i = 0; i < numberOfSteps; i++)
             {
-                cellmap = doSimulationStep(cellmap);
-                ShowMap(cellmap);
+                cellmap = DoSimulationStep(cellmap);
             }
+            ShowMap(cellmap);
         }
         
         public void ShowMap(bool[,] cellmap)
@@ -60,14 +62,18 @@ namespace TilesGenerators
             }
         }
 
-        public bool[,] InitialiseMap(bool[,] map)
+        public bool[,] InitialiseMap(bool[,] map, bool resetMap=false)
         {
             tilemap.transform.position = gameObject.transform.localPosition;
             for (var i = 0; i < Width; i++)
             {
                 for (var j = 0; j < Height - 1; j++)
                 {
-                    if (Random.Range(0f, 1f) < ChanceToStartAlive)
+                    if (resetMap)
+                    {
+                        map[i, j] = false;
+                    }
+                    else if (Random.Range(0f, 1f) < ChanceToStartAlive)
                     {
                         map[i, j] = true;
                     }
@@ -76,15 +82,15 @@ namespace TilesGenerators
 
             return map;
         }
-
-        public bool[,] doSimulationStep(bool[,] oldMap)
+        
+        public bool[,] DoSimulationStep(bool[,] oldMap)
         {
             bool[,] newMap = new bool[Width, Height];
             for (int x  = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    int neighbours = countAliveNeighbours(oldMap, x, y);
+                    int neighbours = CountAliveNeighbours(oldMap, x, y);
                     if (oldMap[x, y])
                     {
                         if (neighbours < deathLimit)
@@ -113,7 +119,7 @@ namespace TilesGenerators
             return newMap;
         }
 
-        public int countAliveNeighbours(bool[,] map, int x, int y)
+        public int CountAliveNeighbours(bool[,] map, int x, int y)
         {
             int countAlive = 0;
             for (int i = -1; i < 2; i++)
