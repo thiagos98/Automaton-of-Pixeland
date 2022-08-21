@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using TilesGenerators;
 using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
@@ -72,6 +73,7 @@ public class GameController : MonoBehaviour
     {
         SetScore(Score);
         FindObjectOfType<Player>().Live();
+        FindObjectOfType<CellularAutomata>().GetComponent<CellularAutomata>().ExecuteScript();
         FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
     }
 
