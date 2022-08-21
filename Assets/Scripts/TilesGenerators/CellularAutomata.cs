@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
@@ -10,13 +11,13 @@ namespace TilesGenerators
         public Tilemap tilemap;
         public RuleTile tile;
 
-        public const int Width = 31;
-        public const int Height = 6;
+        public const int Width = 65;
+        public const int Height = 35;
         
         public const float ChanceToStartAlive = 0.4f;
-        public const int DeathLimit = 4;
-        public const int BirthLimit = 4;
-        public const int NumberOfSteps = 2;
+        [FormerlySerializedAs("DeathLimit")] public int deathLimit = 4;
+        [FormerlySerializedAs("BirthLimit")] public int birthLimit = 3;
+        [FormerlySerializedAs("NumberOfSteps")] public int numberOfSteps = 3;
 
         private void Start()
         {
@@ -27,12 +28,17 @@ namespace TilesGenerators
         {
             GenerateMap();
         }
+        
+        private bool VerifyCollision(Vector2 pos)
+        {
+            return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(pos);
+        }
 
         public void GenerateMap()
         {
             bool[,] cellmap = new bool[Width, Height];
             cellmap = InitialiseMap(cellmap);
-            for (int i = 0; i < NumberOfSteps; i++)
+            for (int i = 0; i < numberOfSteps; i++)
             {
                 cellmap = doSimulationStep(cellmap);
                 ShowMap(cellmap);
@@ -41,11 +47,12 @@ namespace TilesGenerators
         
         public void ShowMap(bool[,] cellmap)
         {
+            var playerPosition = FindObjectOfType<Player>().GetComponent<Transform>().position;
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (cellmap[x, y])
+                    if (cellmap[x, y] && !VerifyCollision(new Vector3(-15.53f, 1.68f, 0f)))
                     {
                         tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                     }
@@ -80,7 +87,7 @@ namespace TilesGenerators
                     int neighbours = countAliveNeighbours(oldMap, x, y);
                     if (oldMap[x, y])
                     {
-                        if (neighbours < DeathLimit)
+                        if (neighbours < deathLimit)
                         {
                             newMap[x, y] = false;
                         }
@@ -91,7 +98,7 @@ namespace TilesGenerators
                     }
                     else
                     {
-                        if (neighbours > BirthLimit)
+                        if (neighbours > birthLimit)
                         {
                             newMap[x, y] = true;
                         }
