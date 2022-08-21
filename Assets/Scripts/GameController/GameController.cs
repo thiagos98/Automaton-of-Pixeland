@@ -73,6 +73,7 @@ public class GameController : MonoBehaviour
     {
         SetScore(Score);
         FindObjectOfType<Player>().Live();
+        FindObjectOfType<NextLevelPoint>().RestartLevelPoint();
         FindObjectOfType<CellularAutomata>().GetComponent<CellularAutomata>().ExecuteScript();
         FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
     }

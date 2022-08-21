@@ -10,19 +10,13 @@ namespace TilesGenerators
         public Tilemap tilemap;
         public RuleTile tile;
 
-        public const int width = 31;
-        public const int height = 6;
-
-        // public int minWidth = -16;
-        // public int maxWidth = 14;
-        //
-        // public int minHeight = -8;
-        // public int maxHeight = -1;
-
-        public float chanceToStartAlive = 0.75f;
-        public int deathLimit = 4;
-        public int birthLimit = 4;
-        public int numberOfSteps = 5;
+        public const int Width = 31;
+        public const int Height = 6;
+        
+        public const float ChanceToStartAlive = 0.4f;
+        public const int DeathLimit = 4;
+        public const int BirthLimit = 4;
+        public const int NumberOfSteps = 2;
 
         private void Start()
         {
@@ -36,20 +30,20 @@ namespace TilesGenerators
 
         public void GenerateMap()
         {
-            bool[,] cellmap = new bool[width, height];
+            bool[,] cellmap = new bool[Width, Height];
             cellmap = InitialiseMap(cellmap);
-            for (int i = 0; i < numberOfSteps; i++)
+            for (int i = 0; i < NumberOfSteps; i++)
             {
                 cellmap = doSimulationStep(cellmap);
+                ShowMap(cellmap);
             }
-            ShowMap(cellmap);
         }
         
         public void ShowMap(bool[,] cellmap)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < Width; x++)
             {
-                for (int y = 0; y < height; y++)
+                for (int y = 0; y < Height; y++)
                 {
                     if (cellmap[x, y])
                     {
@@ -62,11 +56,11 @@ namespace TilesGenerators
         public bool[,] InitialiseMap(bool[,] map)
         {
             tilemap.transform.position = gameObject.transform.localPosition;
-            for (var i = 0; i < width; i++)
+            for (var i = 0; i < Width; i++)
             {
-                for (var j = 0; j < height - 1; j++)
+                for (var j = 0; j < Height - 1; j++)
                 {
-                    if (Random.Range(0f, 1f) < chanceToStartAlive)
+                    if (Random.Range(0f, 1f) < ChanceToStartAlive)
                     {
                         map[i, j] = true;
                     }
@@ -78,15 +72,15 @@ namespace TilesGenerators
 
         public bool[,] doSimulationStep(bool[,] oldMap)
         {
-            bool[,] newMap = new bool[width, height];
-            for (int x  = 0; x < width; x++)
+            bool[,] newMap = new bool[Width, Height];
+            for (int x  = 0; x < Width; x++)
             {
-                for (int y = 0; y < height; y++)
+                for (int y = 0; y < Height; y++)
                 {
                     int neighbours = countAliveNeighbours(oldMap, x, y);
                     if (oldMap[x, y])
                     {
-                        if (neighbours < deathLimit)
+                        if (neighbours < DeathLimit)
                         {
                             newMap[x, y] = false;
                         }
@@ -97,7 +91,7 @@ namespace TilesGenerators
                     }
                     else
                     {
-                        if (neighbours > birthLimit)
+                        if (neighbours > BirthLimit)
                         {
                             newMap[x, y] = true;
                         }
@@ -125,7 +119,7 @@ namespace TilesGenerators
                     {
                         
                     }
-                    else if(neighbourX < 0 || neighbourY < 0 || neighbourX >= width || neighbourY >= height)
+                    else if(neighbourX < 0 || neighbourY < 0 || neighbourX >= Width || neighbourY >= Height)
                     {
                         countAlive++;
                     }
