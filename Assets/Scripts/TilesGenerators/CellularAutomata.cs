@@ -16,9 +16,9 @@ namespace TilesGenerators
         public const int Height = 35;
         
         public const float ChanceToStartAlive = 0.3f;
-        [FormerlySerializedAs("DeathLimit")] public int deathLimit = 3;
-        [FormerlySerializedAs("BirthLimit")] public int birthLimit = 3;
-        [FormerlySerializedAs("NumberOfSteps")] public int numberOfSteps = 5;
+        public int deathLimit = 3;
+        public int birthLimit = 3;
+        public int numberOfSteps = 5;
 
         private void Start()
         {
@@ -30,9 +30,9 @@ namespace TilesGenerators
             GenerateMap();
         }
         
-        private bool VerifyCollision(Vector2 pos)
+        private bool VerifyCollisionOnPlayer()
         {
-            return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(pos);
+            return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(FindObjectOfType<Player>().GetComponent<Transform>().position);
         }
 
         public void GenerateMap()
@@ -49,12 +49,13 @@ namespace TilesGenerators
         
         public void ShowMap(bool[,] cellmap)
         {
-            var playerPosition = FindObjectOfType<Player>().GetComponent<Transform>().position;
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (cellmap[x, y] && !VerifyCollision(new Vector3(-15.53f, 1.68f, 0f)))
+                    
+                    print(VerifyCollisionOnPlayer());
+                    if (cellmap[x, y])
                     {
                         tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                     }
@@ -143,45 +144,6 @@ namespace TilesGenerators
                 }
             }
             return countAlive;
-        }
-
-        public void Dijkstra(bool[,] map, int x, int y)
-        {
-            var queue = new Queue<Vector2>();
-            var visited = new bool[Width, Height];
-            var distance = new int[Width, Height];
-            var previous = new Vector2[Width, Height];
-            queue.Enqueue(new Vector2(x, y));
-            visited[x, y] = true;
-            distance[x, y] = 0;
-            previous[x, y] = new Vector2(x, y);
-            while (queue.Count > 0)
-            {
-                var current = queue.Dequeue();
-                for (int i = -1; i < 2; i++)
-                {
-                    for (int j = -1; j < 2; j++)
-                    {
-                        int neighbourX = (int)current.x + i;
-                        int neighbourY = (int)current.y + j;
-                        if (i == 0 && j == 0)
-                        {
-                            
-                        }
-                        else if(neighbourX < 0 || neighbourY < 0 || neighbourX >= Width || neighbourY >= Height)
-                        {
-                            continue;
-                        }
-                        else if (map[neighbourX, neighbourY] && !visited[neighbourX, neighbourY])
-                        {
-                            visited[neighbourX, neighbourY] = true;
-                            previous[neighbourX, neighbourY] = current;
-                            distance[neighbourX, neighbourY] = distance[(int)current.x, (int)current.y] + 1;
-                            queue.Enqueue(new Vector2(neighbourX, neighbourY));
-                        }
-                    }
-                }
-            }
         }
     }
 }
