@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
     public void Live()
     {
         sr.enabled = true;
-        transform.position = new Vector3(-6.76f, -3.63f, 0f);
+        transform.position = new Vector3(-15.53f, 1.68f, 0f);
         GameController.instance.SetGameOver(false);
     }
 }
