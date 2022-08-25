@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
@@ -7,19 +9,26 @@ namespace TilesGenerators
 {
     public class CellularAutomata : MonoBehaviour
     {
+        public Player player;
+        public GameObject finalLevel;
         public Tilemap tilemap;
         public RuleTile tile;
 
-        public const int Width = 31;
-        public const int Height = 6;
+        public const int Width = 65;
+        public const int Height = 35;
         
+        // how dense the initial grid is with living cells
         public const float ChanceToStartAlive = 0.4f;
-        public const int DeathLimit = 4;
-        public const int BirthLimit = 4;
-        public const int NumberOfSteps = 2;
+        // number of neighbours that cause a alive cell to become dead
+        public int deathLimit = 4;
+        // number of neighbours that cause a dead cell to become alive
+        public int birthLimit = 4;
+        // number of times we perform the simulation step
+        public int numberOfSteps = 3;
 
         private void Start()
         {
+            tilemap.transform.position = gameObject.transform.localPosition;
             ExecuteScript();
         }
 
@@ -32,14 +41,14 @@ namespace TilesGenerators
         {
             bool[,] cellmap = new bool[Width, Height];
             cellmap = InitialiseMap(cellmap);
-            for (int i = 0; i < NumberOfSteps; i++)
+            for (int i = 0; i < numberOfSteps; i++)
             {
-                cellmap = doSimulationStep(cellmap);
-                ShowMap(cellmap);
+                cellmap = DoSimulationStep(cellmap);
             }
+            DrawMap(cellmap);
         }
-        
-        public void ShowMap(bool[,] cellmap)
+
+        public void DrawMap(bool[,] cellmap)
         {
             for (int x = 0; x < Width; x++)
             {
@@ -53,14 +62,17 @@ namespace TilesGenerators
             }
         }
 
-        public bool[,] InitialiseMap(bool[,] map)
+        public bool[,] InitialiseMap(bool[,] map, bool resetMap=false)
         {
-            tilemap.transform.position = gameObject.transform.localPosition;
             for (var i = 0; i < Width; i++)
             {
                 for (var j = 0; j < Height - 1; j++)
                 {
-                    if (Random.Range(0f, 1f) < ChanceToStartAlive)
+                    if (resetMap)
+                    {
+                        map[i, j] = false;
+                    }
+                    else if (Random.Range(0f, 1f) < ChanceToStartAlive)
                     {
                         map[i, j] = true;
                     }
@@ -69,18 +81,18 @@ namespace TilesGenerators
 
             return map;
         }
-
-        public bool[,] doSimulationStep(bool[,] oldMap)
+        
+        public bool[,] DoSimulationStep(bool[,] oldMap)
         {
             bool[,] newMap = new bool[Width, Height];
             for (int x  = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    int neighbours = countAliveNeighbours(oldMap, x, y);
+                    int neighbours = CountAliveNeighbours(oldMap, x, y);
                     if (oldMap[x, y])
                     {
-                        if (neighbours < DeathLimit)
+                        if (neighbours < deathLimit)
                         {
                             newMap[x, y] = false;
                         }
@@ -91,7 +103,7 @@ namespace TilesGenerators
                     }
                     else
                     {
-                        if (neighbours > BirthLimit)
+                        if (neighbours > birthLimit)
                         {
                             newMap[x, y] = true;
                         }
@@ -106,7 +118,7 @@ namespace TilesGenerators
             return newMap;
         }
 
-        public int countAliveNeighbours(bool[,] map, int x, int y)
+        public int CountAliveNeighbours(bool[,] map, int x, int y)
         {
             int countAlive = 0;
             for (int i = -1; i < 2; i++)
@@ -130,6 +142,11 @@ namespace TilesGenerators
                 }
             }
             return countAlive;
+        }
+
+        public void RemoveTilesAroundObject(GameObject obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

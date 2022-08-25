@@ -6,7 +6,7 @@ public class NextLevelPoint : MonoBehaviour
 {
     public void RestartLevelPoint()
     {
-        gameObject.transform.position = new Vector3(6.72f, 1.68f, 0);
+        gameObject.transform.position = new Vector3(14.8f, 1.68f, 0);
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
