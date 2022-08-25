@@ -9,19 +9,26 @@ namespace TilesGenerators
 {
     public class CellularAutomata : MonoBehaviour
     {
+        public Player player;
+        public GameObject finalLevel;
         public Tilemap tilemap;
         public RuleTile tile;
 
         public const int Width = 65;
         public const int Height = 35;
         
-        public const float ChanceToStartAlive = 0.3f;
-        public int deathLimit = 3;
-        public int birthLimit = 3;
-        public int numberOfSteps = 5;
+        // how dense the initial grid is with living cells
+        public const float ChanceToStartAlive = 0.4f;
+        // number of neighbours that cause a alive cell to become dead
+        public int deathLimit = 4;
+        // number of neighbours that cause a dead cell to become alive
+        public int birthLimit = 4;
+        // number of times we perform the simulation step
+        public int numberOfSteps = 3;
 
         private void Start()
         {
+            tilemap.transform.position = gameObject.transform.localPosition;
             ExecuteScript();
         }
 
@@ -29,32 +36,24 @@ namespace TilesGenerators
         {
             GenerateMap();
         }
-        
-        private bool VerifyCollisionOnPlayer()
-        {
-            return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(FindObjectOfType<Player>().GetComponent<Transform>().position);
-        }
 
         public void GenerateMap()
         {
             bool[,] cellmap = new bool[Width, Height];
-            cellmap = InitialiseMap(cellmap, true); // Resetar o mapa com todas as celulas mortas
             cellmap = InitialiseMap(cellmap);
             for (int i = 0; i < numberOfSteps; i++)
             {
                 cellmap = DoSimulationStep(cellmap);
             }
-            ShowMap(cellmap);
+            DrawMap(cellmap);
         }
-        
-        public void ShowMap(bool[,] cellmap)
+
+        public void DrawMap(bool[,] cellmap)
         {
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    
-                    print(VerifyCollisionOnPlayer());
                     if (cellmap[x, y])
                     {
                         tilemap.SetTile(new Vector3Int(x, y, 0), tile);
@@ -65,7 +64,6 @@ namespace TilesGenerators
 
         public bool[,] InitialiseMap(bool[,] map, bool resetMap=false)
         {
-            tilemap.transform.position = gameObject.transform.localPosition;
             for (var i = 0; i < Width; i++)
             {
                 for (var j = 0; j < Height - 1; j++)
@@ -144,6 +142,11 @@ namespace TilesGenerators
                 }
             }
             return countAlive;
+        }
+
+        public void RemoveTilesAroundObject(GameObject obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }
