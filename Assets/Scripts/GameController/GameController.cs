@@ -12,8 +12,9 @@ public class GameController : MonoBehaviour
     public Text ScoreText;
 
     public GameObject GameOverPanel;
+    public GameObject VictoryPanel;
+
     private int Score;
-    
     private readonly string scoreKey = "Score";
     public int CurrentScore { get; set; }
     private int currentLevel;
@@ -69,12 +70,17 @@ public class GameController : MonoBehaviour
         GameOverPanel.SetActive(value);
     }
 
+    public void SetVictory(bool value)
+    {
+        VictoryPanel.SetActive(value);
+    }
+
     public void ReloadGame(bool value)
     {
         SetScore(Score);
         FindObjectOfType<Player>().Live();
         FindObjectOfType<NextLevelPoint>().RestartLevelPoint();
-        FindObjectOfType<CellularAutomata>().GetComponent<CellularAutomata>().ExecuteScript();
+        // FindObjectOfType<CellularAutomata>().GetComponent<CellularAutomata>().ExecuteScript();
         FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
     }
 

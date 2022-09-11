@@ -19,7 +19,7 @@ public class NextLevelPoint : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(SceneManager.sceneCountInBuildSettings-1); // Credits Scene
+                GameController.instance.SetVictory(true);
             }
         }
     }
