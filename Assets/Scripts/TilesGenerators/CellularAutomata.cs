@@ -7,8 +7,9 @@ using Random = UnityEngine.Random;
 
 namespace TilesGenerators
 {
-    public class CellularAutomata : SpawnerObjects
+    public class CellularAutomata : MonoBehaviour
     {
+        public Tilemap tilemap;
         public RuleTile tile;
         public const int Width = 65;
         public const int Height = 35;
@@ -28,7 +29,7 @@ namespace TilesGenerators
             ExecuteScript();
         }
 
-        private new void ExecuteScript()
+        private void ExecuteScript()
         {
             GenerateMap();
         }
@@ -50,9 +51,7 @@ namespace TilesGenerators
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    var canInstantiate = VerifyCollision(new Vector2(x, y));
-                    print(canInstantiate);
-                    if (cellmap[x, y] && !canInstantiate)
+                    if (cellmap[x, y])
                     {
                         tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                     }
@@ -140,11 +139,6 @@ namespace TilesGenerators
                 }
             }
             return countAlive;
-        }
-
-        public void RemoveTilesAroundObject(GameObject obj)
-        {
-            throw new NotImplementedException();
         }
     }
 }

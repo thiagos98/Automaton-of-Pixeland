@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class SpawnerObjects : MonoBehaviour
 {
+    public GameObject cellularAutomataGameObject;
     public Tilemap tilemap;
     public List<GameObject> spawnPoolCollectables;
     public List<GameObject> spawnPoolEnemies;
@@ -16,6 +17,7 @@ public class SpawnerObjects : MonoBehaviour
     private int lenghtGame;
     private void Start()
     {
+        tilemap.transform.position = cellularAutomataGameObject.transform.localPosition;
         ExecuteScript();
     }
 
@@ -89,6 +91,7 @@ public class SpawnerObjects : MonoBehaviour
                 {
                     screenPos = GenerateNewPosition();
                     cantInstantiate = VerifyCollision(screenPos);
+                    print(cantInstantiate);
                 }
                 Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
             }
