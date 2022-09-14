@@ -2786,7 +2786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1023148858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2799,13 +2799,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce1af4936b311a4495a985238e8d375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1360928405}
-  finalLevel: {fileID: 810074251}
   tilemap: {fileID: 972703956}
+  spawnPoolCollectables: []
+  spawnPoolEnemies: []
+  background: {fileID: 0}
+  spawnsCollectableToLevels: 
+  spawnsEnemyToLevels: 
+  rawInput: []
   tile: {fileID: 11400000, guid: 36082144fa145aa41a0f01fe24e78431, type: 2}
-  deathLimit: 4
+  deathLimit: 5
   birthLimit: 3
-  numberOfSteps: 3
+  numberOfSteps: 10
 --- !u!4 &1023148859
 Transform:
   m_ObjectHideFlags: 0
@@ -3266,18 +3270,6 @@ PrefabInstance:
       objectReference: {fileID: 1051170277}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b3220dea229e40478a87751525c4b7f, type: 3}
---- !u!114 &1360928405 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3494051375970333620, guid: 76a9e8ac868118346a81e8221850aa89,
-    type: 3}
-  m_PrefabInstance: {fileID: 3494051376249035216}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1efee04b8a0b2ee4dad6ce2c332eb0da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1728016146
 GameObject:
   m_ObjectHideFlags: 0
