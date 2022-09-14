@@ -7,13 +7,9 @@ using Random = UnityEngine.Random;
 
 namespace TilesGenerators
 {
-    public class CellularAutomata : MonoBehaviour
+    public class CellularAutomata : SpawnerObjects
     {
-        public Player player;
-        public GameObject finalLevel;
-        public Tilemap tilemap;
         public RuleTile tile;
-
         public const int Width = 65;
         public const int Height = 35;
         
@@ -32,12 +28,12 @@ namespace TilesGenerators
             ExecuteScript();
         }
 
-        public void ExecuteScript()
+        private new void ExecuteScript()
         {
             GenerateMap();
         }
 
-        public void GenerateMap()
+        private void GenerateMap()
         {
             bool[,] cellmap = new bool[Width, Height];
             cellmap = InitialiseMap(cellmap);
@@ -48,13 +44,15 @@ namespace TilesGenerators
             DrawMap(cellmap);
         }
 
-        public void DrawMap(bool[,] cellmap)
+        private void DrawMap(bool[,] cellmap)
         {
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (cellmap[x, y])
+                    var canInstantiate = VerifyCollision(new Vector2(x, y));
+                    print(canInstantiate);
+                    if (cellmap[x, y] && !canInstantiate)
                     {
                         tilemap.SetTile(new Vector3Int(x, y, 0), tile);
                     }
@@ -62,7 +60,7 @@ namespace TilesGenerators
             }
         }
 
-        public bool[,] InitialiseMap(bool[,] map, bool resetMap=false)
+        private bool[,] InitialiseMap(bool[,] map, bool resetMap=false)
         {
             for (var i = 0; i < Width; i++)
             {
@@ -81,8 +79,8 @@ namespace TilesGenerators
 
             return map;
         }
-        
-        public bool[,] DoSimulationStep(bool[,] oldMap)
+
+        private bool[,] DoSimulationStep(bool[,] oldMap)
         {
             bool[,] newMap = new bool[Width, Height];
             for (int x  = 0; x < Width; x++)
@@ -118,7 +116,7 @@ namespace TilesGenerators
             return newMap;
         }
 
-        public int CountAliveNeighbours(bool[,] map, int x, int y)
+        private int CountAliveNeighbours(bool[,] map, int x, int y)
         {
             int countAlive = 0;
             for (int i = -1; i < 2; i++)

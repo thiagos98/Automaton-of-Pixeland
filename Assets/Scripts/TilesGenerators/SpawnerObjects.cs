@@ -37,7 +37,7 @@ public class SpawnerObjects : MonoBehaviour
         lenghtGame = rawInput.Length;
         PlayerPrefs.SetInt("LenghtGame", lenghtGame);
     }
-    private void InitializeObjectsPerLevel()
+    protected void InitializeObjectsPerLevel()
     {
         spawnsCollectableToLevels = new int[lenghtGame];
         spawnsEnemyToLevels = new int[lenghtGame];
@@ -57,7 +57,7 @@ public class SpawnerObjects : MonoBehaviour
         }
     }
     
-    private bool VerifyCollision(Vector2 pos)
+    protected bool VerifyCollision(Vector2 pos)
     {
         return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(pos);
     }
@@ -95,9 +95,8 @@ public class SpawnerObjects : MonoBehaviour
         }
     }
 
-    private Vector2 GenerateNewPosition()
+    protected Vector2 GenerateNewPosition()
     {
-        
         var bounds = sr.bounds;
         float screenX = Random.Range(bounds.min.x, bounds.max.x);
         float screenY = Random.Range(bounds.min.y, bounds.max.y);
