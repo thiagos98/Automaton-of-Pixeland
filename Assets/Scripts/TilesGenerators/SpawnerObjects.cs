@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class SpawnerObjects : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class SpawnerObjects : MonoBehaviour
     public int[] spawnsEnemyToLevels;
     public string[] rawInput;
     private int lenghtGame;
+
     private void Start()
     {
         tilemap.transform.position = cellularAutomataGameObject.transform.localPosition;
@@ -76,7 +79,7 @@ public class SpawnerObjects : MonoBehaviour
         {
             var randomItem = Random.Range(0, pool.Count);
             var toSpawn = pool[randomItem];
-
+            
             var screenPos = GenerateNewPosition();
             var cantInstantiate = VerifyCollision(screenPos);
             if(!cantInstantiate)
@@ -95,14 +98,15 @@ public class SpawnerObjects : MonoBehaviour
                 }
                 Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
             }
+            
         }
     }
 
-    protected Vector2 GenerateNewPosition()
+    private Vector2 GenerateNewPosition()
     {
-        var bounds = sr.bounds;
-        float screenX = Random.Range(bounds.min.x, bounds.max.x);
-        float screenY = Random.Range(bounds.min.y, bounds.max.y);
+        var boundsTilemap = tilemap.cellBounds;
+        var screenX = Random.Range(boundsTilemap.min.x, boundsTilemap.max.x);
+        var screenY = Random.Range(boundsTilemap.min.y, boundsTilemap.max.y);
         
         return new Vector2(screenX, screenY);
     }

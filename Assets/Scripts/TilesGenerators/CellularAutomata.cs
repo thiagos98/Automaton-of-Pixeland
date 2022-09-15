@@ -12,7 +12,7 @@ namespace TilesGenerators
         public Tilemap tilemap;
         public RuleTile tile;
         public const int Width = 65;
-        public const int Height = 35;
+        public const int Height = 34;
         
         // how dense the initial grid is with living cells
         public const float ChanceToStartAlive = 0.4f;
@@ -22,7 +22,7 @@ namespace TilesGenerators
         public int birthLimit = 4;
         // number of times we perform the simulation step
         public int numberOfSteps = 3;
-
+        
         private void Start()
         {
             tilemap.transform.position = gameObject.transform.localPosition;
