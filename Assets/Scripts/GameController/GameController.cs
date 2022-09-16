@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using TilesGenerators;
-using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
@@ -35,7 +34,7 @@ public class GameController : MonoBehaviour
 
     public void LoadFromJson()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Resources/Files/Input.json");
+        string json = File.ReadAllText(Application.dataPath + "/Resources/Files/seed.json");
         PlayerPrefs.SetString("InputLevel", json);
     }
 
@@ -80,8 +79,7 @@ public class GameController : MonoBehaviour
         SetScore(Score);
         FindObjectOfType<Player>().Live();
         FindObjectOfType<NextLevelPoint>().RestartLevelPoint();
-        // FindObjectOfType<CellularAutomata>().GetComponent<CellularAutomata>().ExecuteScript();
-        FindObjectOfType<SpawnerObjects>().GetComponent<SpawnerObjects>().ExecuteScript();
+        FindObjectOfType<LevelGenerator>().GetComponent<LevelGenerator>().ExecuteScript();
     }
 
     public int GetCurrentLevel()

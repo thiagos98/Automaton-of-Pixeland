@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class RemoveAllTiles : MonoBehaviour
+namespace TilesGenerators
 {
-    private Tilemap tilemap;
-
-    private void Start()
+    public class RemoveAllTiles : MonoBehaviour
     {
-        TryGetComponent(out tilemap);
-        RemoveTiles();
-    }
+        private Tilemap tilemap;
 
-    private void RemoveTiles()
-    {
-        tilemap.ClearAllTiles();
+        private void Start()
+        {
+            TryGetComponent(out tilemap);
+            RemoveTiles();
+        }
+
+        private void RemoveTiles()
+        {
+            tilemap.ClearAllTiles();
+        }
     }
 }
