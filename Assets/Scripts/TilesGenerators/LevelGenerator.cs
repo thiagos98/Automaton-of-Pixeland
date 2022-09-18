@@ -39,6 +39,10 @@ namespace TilesGenerators
         private SpriteRenderer sr;
         public int[] spawnsCollectableToLevels;
         public int[] spawnsEnemyToLevels;
+        public int[] deathLimitToLevelsToLevels;
+        public int[] birthLimitToLevels;
+        public int[] numberOfStepsToLevels;
+
         public string[] rawInput;
         private int lenghtGame;
 
@@ -52,10 +56,13 @@ namespace TilesGenerators
 
         public void ExecuteScript()
         {
-            GenerateMap();
-            sr = background.GetComponent<SpriteRenderer>();
             ConvertJsonToInputData();
             InitializeObjectsPerLevel();
+            deathLimit = UpdateVariables(deathLimitToLevelsToLevels, deathLimit);
+            birthLimit = UpdateVariables(birthLimitToLevels, birthLimit);
+            numberOfSteps = UpdateVariables(numberOfStepsToLevels, numberOfSteps);
+            GenerateMap();
+            sr = background.GetComponent<SpriteRenderer>();
             Spawn(spawnPoolCollectables, spawnsCollectableToLevels, "Collectable");
             Spawn(spawnPoolEnemies, spawnsEnemyToLevels, "enemy");
         }
@@ -173,6 +180,12 @@ namespace TilesGenerators
 
         #region General
 
+        private int UpdateVariables(IReadOnlyList<int> valueToLevel, int variable)
+        {
+            variable = valueToLevel[GameController.instance.GetCurrentLevel()];
+            return variable;
+        }
+        
         private void ConvertJsonToInputData()
         {
             string json = PlayerPrefs.GetString("InputLevel");
@@ -184,13 +197,24 @@ namespace TilesGenerators
 
         private void InitializeObjectsPerLevel()
         {
+            // 0: collectable
+            // 1: enemy
+            // 2: deathLimit
+            // 3: birthLimit
+            // 4: numberOfSteps
             spawnsCollectableToLevels = new int[lenghtGame];
             spawnsEnemyToLevels = new int[lenghtGame];
+            deathLimitToLevelsToLevels = new int[lenghtGame];
+            birthLimitToLevels = new int[lenghtGame];
+            numberOfStepsToLevels = new int[lenghtGame];
 
             for (int i = 0; i < lenghtGame; i++)
             {
                 spawnsCollectableToLevels[i] = int.Parse(rawInput[i][0].ToString());
                 spawnsEnemyToLevels[i] = int.Parse(rawInput[i][1].ToString());
+                deathLimitToLevelsToLevels[i] = int.Parse(rawInput[i][2].ToString());
+                birthLimitToLevels[i] = int.Parse(rawInput[i][3].ToString());
+                numberOfStepsToLevels[i] = int.Parse(rawInput[i][4].ToString());
             }
         }
 
@@ -207,7 +231,8 @@ namespace TilesGenerators
             Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.5f);
             foreach (var collider in colliders)
             {
-                if (collider.gameObject.CompareTag("Collectable") || collider.gameObject.CompareTag("enemy"))
+                if (collider.gameObject.CompareTag("Collectable") || collider.gameObject.CompareTag("enemy") ||
+                    collider.gameObject.CompareTag("Player"))
                 {
                     return true;
                 }
@@ -227,6 +252,7 @@ namespace TilesGenerators
             int numberToSpawn = spawnToLevels[GameController.instance.GetCurrentLevel()];
             for (int i = 0; i < numberToSpawn; i++)
             {
+                
                 var randomItem = Random.Range(0, pool.Count);
                 var toSpawn = pool[randomItem];
 

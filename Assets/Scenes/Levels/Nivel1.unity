@@ -2827,7 +2827,7 @@ MonoBehaviour:
   tilemap: {fileID: 972703956}
   tile: {fileID: 11400000, guid: 36082144fa145aa41a0f01fe24e78431, type: 2}
   deathLimit: 3
-  birthLimit: 5
+  birthLimit: 6
   numberOfSteps: 10
   spawnPoolCollectables:
   - {fileID: 2126453898011698199, guid: 02738d0c24eea0d4881a935c6caf583c, type: 3}
