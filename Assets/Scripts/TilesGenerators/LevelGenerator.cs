@@ -235,7 +235,7 @@ namespace TilesGenerators
                 if (!cantInstantiate)
                 {
                     var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
-                    newObj.transform.SetParent(gameObject.transform, false);
+                    newObj.transform.SetParent(gameObject.transform);
                 }
                 else
                 {
@@ -248,23 +248,16 @@ namespace TilesGenerators
                     }
 
                     var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
-                    newObj.transform.SetParent(gameObject.transform, false);
+                    newObj.transform.SetParent(gameObject.transform);
                 }
             }
         }
 
         private Vector2 GenerateNewPosition()
         {
-            while (true)
-            {
-                var boundsTilemap = tilemap.cellBounds;
-                var screenX = Random.Range(boundsTilemap.min.x+1, boundsTilemap.max.x-1);
-                var screenY = Random.Range(boundsTilemap.min.y+1, boundsTilemap.max.y-1);
-                if (screenX < 16 && screenY < 8)
-                {
-                    return new Vector2(screenX, screenY);
-                }
-            }
+            var screenX = Random.Range(-16.501f, 16.5f);
+            var screenY = Random.Range(-8.5f, 8f);
+            return new Vector2(screenX, screenY);
         }
 
         #endregion
