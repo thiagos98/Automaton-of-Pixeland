@@ -204,7 +204,16 @@ namespace TilesGenerators
 
         private bool VerifyCollision(Vector2 pos)
         {
-            return tilemap.GetComponent<TilemapCollider2D>().OverlapPoint(pos);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.5f);
+            foreach (var collider in colliders)
+            {
+                if (collider.gameObject.CompareTag("Collectable") || collider.gameObject.CompareTag("enemy"))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
@@ -225,7 +234,8 @@ namespace TilesGenerators
                 var cantInstantiate = VerifyCollision(screenPos);
                 if (!cantInstantiate)
                 {
-                    Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+                    var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+                    newObj.transform.SetParent(gameObject.transform, false);
                 }
                 else
                 {
@@ -235,21 +245,26 @@ namespace TilesGenerators
                     {
                         screenPos = GenerateNewPosition();
                         cantInstantiate = VerifyCollision(screenPos);
-                        print(cantInstantiate);
                     }
 
-                    Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+                    var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+                    newObj.transform.SetParent(gameObject.transform, false);
                 }
             }
         }
 
         private Vector2 GenerateNewPosition()
         {
-            var boundsTilemap = tilemap.cellBounds;
-            var screenX = Random.Range(boundsTilemap.min.x, boundsTilemap.max.x);
-            var screenY = Random.Range(boundsTilemap.min.y, boundsTilemap.max.y);
-
-            return new Vector2(screenX, screenY);
+            while (true)
+            {
+                var boundsTilemap = tilemap.cellBounds;
+                var screenX = Random.Range(boundsTilemap.min.x+1, boundsTilemap.max.x-1);
+                var screenY = Random.Range(boundsTilemap.min.y+1, boundsTilemap.max.y-1);
+                if (screenX < 16 && screenY < 8)
+                {
+                    return new Vector2(screenX, screenY);
+                }
+            }
         }
 
         #endregion
