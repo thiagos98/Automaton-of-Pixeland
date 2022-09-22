@@ -2571,7 +2571,6 @@ GameObject:
   - component: {fileID: 972703956}
   - component: {fileID: 972703955}
   - component: {fileID: 972703957}
-  - component: {fileID: 972703958}
   m_Layer: 8
   m_Name: ground
   m_TagString: Untagged
@@ -2783,18 +2782,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!114 &972703958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972703953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0fccd0a415cbd943865fe95ead420fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1023148857
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,7 +2793,7 @@ GameObject:
   - component: {fileID: 1023148859}
   - component: {fileID: 1023148858}
   m_Layer: 0
-  m_Name: GeneratorTerrain
+  m_Name: LevelGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2836,6 +2823,9 @@ MonoBehaviour:
   background: {fileID: 1051170277}
   spawnsCollectableToLevels: 
   spawnsEnemyToLevels: 
+  deathLimitToLevelsToLevels: 
+  birthLimitToLevels: 
+  numberOfStepsToLevels: 
   rawInput: []
 --- !u!4 &1023148859
 Transform:
@@ -2845,7 +2835,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023148857}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.501, y: -8.5, z: 0}
+  m_LocalPosition: {x: -16.5, y: -8.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
