@@ -2796,6 +2796,8 @@ MonoBehaviour:
   birthLimitToLevels: 
   numberOfStepsToLevels: 
   rawInput: []
+  player: {fileID: 3494051375970333583, guid: 76a9e8ac868118346a81e8221850aa89, type: 3}
+  exit: {fileID: 9195045935960532465, guid: 6e69d72a640d2e844b855c575afec8ca, type: 3}
 --- !u!4 &1023148859
 Transform:
   m_ObjectHideFlags: 0

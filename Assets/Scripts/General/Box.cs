@@ -29,9 +29,9 @@ public class Box : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             if (isUp)
-                col.gameObject.GetComponent<Player>().ImpulseForce(bounceForce);
+                col.gameObject.GetComponent<Player.Player>().ImpulseForce(bounceForce);
             else
-                col.gameObject.GetComponent<Player>().ImpulseForce(-bounceForce);
+                col.gameObject.GetComponent<Player.Player>().ImpulseForce(-bounceForce);
 
             health -= 1;
             anim.SetTrigger("hit");
