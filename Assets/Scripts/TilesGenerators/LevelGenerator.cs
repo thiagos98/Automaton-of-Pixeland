@@ -46,6 +46,9 @@ namespace TilesGenerators
         public string[] rawInput;
         private int lenghtGame;
 
+        public GameObject player;
+        public GameObject exit;
+
         #endregion
 
         private void Start()
@@ -65,6 +68,8 @@ namespace TilesGenerators
             sr = background.GetComponent<SpriteRenderer>();
             Spawn(spawnPoolCollectables, spawnsCollectableToLevels, "Collectable");
             Spawn(spawnPoolEnemies, spawnsEnemyToLevels, "enemy");
+            // GenerateObjects(player);
+            GenerateObjects(exit);
         }
 
         #region CellularAutomataAlgorithm
@@ -256,34 +261,39 @@ namespace TilesGenerators
                 var randomItem = Random.Range(0, pool.Count);
                 var toSpawn = pool[randomItem];
 
-                var screenPos = GenerateNewPosition();
-                var cantInstantiate = VerifyCollision(screenPos);
-                if (!cantInstantiate)
-                {
-                    var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
-                    newObj.transform.SetParent(gameObject.transform);
-                }
-                else
-                {
-                    screenPos = GenerateNewPosition();
-                    cantInstantiate = VerifyCollision(screenPos);
-                    while (cantInstantiate)
-                    {
-                        screenPos = GenerateNewPosition();
-                        cantInstantiate = VerifyCollision(screenPos);
-                    }
-
-                    var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
-                    newObj.transform.SetParent(gameObject.transform);
-                }
+                GenerateObjects(toSpawn);
             }
         }
 
         private Vector2 GenerateNewPosition()
         {
-            var screenX = Random.Range(-16.501f, 16.5f);
-            var screenY = Random.Range(-8.5f, 8f);
+            var screenX = Random.Range(-16f, 16f);
+            var screenY = Random.Range(-8f, 8f);
             return new Vector2(screenX, screenY);
+        }
+
+        private void GenerateObjects(GameObject toSpawn)
+        {
+            var screenPos = GenerateNewPosition();
+            var cantInstantiate = VerifyCollision(screenPos);
+            if (!cantInstantiate)
+            {
+                var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+                newObj.transform.SetParent(gameObject.transform);
+            }
+            else
+            {
+                screenPos = GenerateNewPosition();
+                cantInstantiate = VerifyCollision(screenPos);
+                while (cantInstantiate)
+                {
+                    screenPos = GenerateNewPosition();
+                    cantInstantiate = VerifyCollision(screenPos);
+                }
+
+                var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+                newObj.transform.SetParent(gameObject.transform);
+            }
         }
 
         #endregion

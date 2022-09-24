@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class NextLevelPoint : MonoBehaviour
 {
     public void RestartLevelPoint()
     {
-        gameObject.transform.position = new Vector3(14.8f, 1.68f, 0);
+        gameObject.transform.position = new Vector3(Random.Range(-16, 16), Random.Range(-8, 8), 0);
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
