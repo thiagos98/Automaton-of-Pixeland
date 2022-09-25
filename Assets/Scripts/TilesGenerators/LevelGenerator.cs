@@ -243,19 +243,9 @@ namespace TilesGenerators
             }
         }
 
-        private bool VerifyCollision(Vector2 pos)
+        private bool VerifyCollisionInTilemap(Vector2 pos)
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.5f);
-            foreach (var collider in colliders)
-            {
-                if (collider.gameObject.CompareTag("Collectable") || collider.gameObject.CompareTag("enemy") ||
-                    collider.gameObject.CompareTag("Player"))
-                {
-                    return true;
-                }
-            }
-            
-            return false;
+            return tilemap.HasTile(tilemap.WorldToCell(pos));
         }
 
         #endregion
@@ -293,7 +283,7 @@ namespace TilesGenerators
         private void GenerateObjects(GameObject toSpawn, bool wideObject = false)
         {
             var screenPos = GenerateNewPosition(wideObject);
-            var cantInstantiate = VerifyCollision(screenPos);
+            var cantInstantiate = VerifyCollisionInTilemap(screenPos);
             if (!cantInstantiate)
             {
                 var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
@@ -302,11 +292,11 @@ namespace TilesGenerators
             else
             {
                 screenPos = GenerateNewPosition();
-                cantInstantiate = VerifyCollision(screenPos);
+                cantInstantiate = VerifyCollisionInTilemap(screenPos);
                 while (cantInstantiate)
                 {
                     screenPos = GenerateNewPosition();
-                    cantInstantiate = VerifyCollision(screenPos);
+                    cantInstantiate = VerifyCollisionInTilemap(screenPos);
                 }
 
                 var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
