@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -49,6 +50,12 @@ namespace TilesGenerators
 
         #endregion
 
+        private void Awake()
+        {
+            ConvertJsonToInputData();
+            InitializeObjectsPerLevel();
+        }
+
         private void Start()
         {
             tilemap.transform.position = gameObject.transform.localPosition;
@@ -57,23 +64,16 @@ namespace TilesGenerators
 
         public void ExecuteScript()
         {
-            ConvertJsonToInputData();
-            InitializeObjectsPerLevel();
-            print(deathLimit);
-            deathLimit = UpdateVariables(deathLimitToLevelsToLevels);
-            print(deathLimit);
-            print(birthLimit);
-            birthLimit = UpdateVariables(birthLimitToLevels);
-            print(birthLimit);
-            print(numberOfSteps);
-            numberOfSteps = UpdateVariables(numberOfStepsToLevels);
-            print(numberOfSteps);
-            GenerateMap();
-            sr = background.GetComponent<SpriteRenderer>();
             DestroyObjects("Collectable");
             DestroyObjects("enemy");
             DestroyObjects("Player");
             DestroyObjects("NextLevel");
+            RemoveAllTiles();
+            deathLimit = UpdateVariables(deathLimitToLevelsToLevels);
+            birthLimit = UpdateVariables(birthLimitToLevels);
+            numberOfSteps = UpdateVariables(numberOfStepsToLevels);
+            GenerateMap();
+            sr = background.GetComponent<SpriteRenderer>();
             Spawn(spawnPoolCollectables, spawnsCollectableToLevels);
             Spawn(spawnPoolEnemies, spawnsEnemyToLevels);
             GenerateObjects(player);
@@ -192,6 +192,11 @@ namespace TilesGenerators
         
 
         #region General
+
+        public void RemoveAllTiles()
+        {
+            tilemap.ClearAllTiles();
+        }
 
         private int UpdateVariables(IReadOnlyList<int> valueToLevel)
         {
