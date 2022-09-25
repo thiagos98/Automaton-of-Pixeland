@@ -24,6 +24,7 @@ namespace GameController
 
         private void Awake()
         {
+            Time.timeScale = 1;
             currentLevel = 0;
             CurrentScore = PlayerPrefs.GetInt(scoreKey);
             LoadFromJson();
