@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  JumpForce: 5
+  JumpForce: 5.3
   jumpSoundEffect: {fileID: 7529870436177188260}
   deathSoundEffect: {fileID: 2620531203429747034}
 --- !u!114 &4686092730490870627

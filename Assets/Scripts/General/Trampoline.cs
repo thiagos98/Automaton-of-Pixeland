@@ -17,7 +17,7 @@ public class Trampoline : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             anim.SetTrigger("jump");
-            col.gameObject.GetComponent<Player>().ImpulseForce(bounceForce);
+            col.gameObject.GetComponent<Player.Player>().ImpulseForce(bounceForce);
         }
     }
 }
