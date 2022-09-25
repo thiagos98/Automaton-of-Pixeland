@@ -4,6 +4,6 @@ public class ResetScore : MonoBehaviour
 {
     private void Start()
     {
-        FindObjectOfType<GameController.GameController>().SetScore(0);
+        FindObjectOfType<GameController>().SetScore(0);
     }
 }

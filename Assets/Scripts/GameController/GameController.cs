@@ -1,98 +1,99 @@
-﻿using System.IO;
-using TilesGenerators;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
+using System.IO;
+using TilesGenerators;
 
-namespace GameController
+public class GameController : MonoBehaviour
 {
-    public class GameController : MonoBehaviour
+    public static GameController instance;
+
+    public Text ScoreText;
+
+    public GameObject GameOverPanel;
+    public GameObject VictoryPanel;
+
+    private int Score;
+    private readonly string scoreKey = "Score";
+    public int CurrentScore { get; set; }
+    private int currentLevel;
+
+    private void Awake()
     {
-        public static GameController instance;
+        currentLevel = 0;
+        CurrentScore = PlayerPrefs.GetInt(scoreKey);
+        LoadFromJson();
+    }
 
-        [FormerlySerializedAs("ScoreText")] public Text scoreText;
-        public Text currentLevelText;
+    private void Start()
+    {
+        instance = this;
+        Score = CurrentScore;
+        UpdateScoreText();
+    }
 
-        [FormerlySerializedAs("GameOverPanel")] public GameObject gameOverPanel;
-        [FormerlySerializedAs("VictoryPanel")] public GameObject victoryPanel;
+    public void LoadFromJson()
+    {
+        string json = File.ReadAllText(Application.dataPath + "/Resources/Files/seed.json");
+        PlayerPrefs.SetString("InputLevel", json);
+    }
 
-        private int score;
-        private readonly string scoreKey = "Score";
-        public int CurrentScore { get; set; }
-        private int currentLevel;
+    public int GetScore()
+    {
+        return Score;
+    }
 
-        private void Awake()
-        {
-            currentLevel = 0;
-            CurrentScore = PlayerPrefs.GetInt(scoreKey);
-            LoadFromJson();
-        }
+    public void AddScore(int value)
+    {
+        Score += value;
+        UpdateScoreText();
+    }
 
-        private void Start()
-        {
-            instance = this;
-            score = CurrentScore;
-            UpdateScoreText();
-        }
+    public void SetScore(int score)
+    {
+        PlayerPrefs.SetInt(scoreKey, score);
+    }
 
-        private void LoadFromJson()
-        {
-            string json = File.ReadAllText(Application.dataPath + "/Resources/Files/seed.json");
-            PlayerPrefs.SetString("InputLevel", json);
-        }
+    private void UpdateScoreText()
+    {
+        ScoreText.text = Score.ToString();
+    }
 
-        public void AddScore(int value)
-        {
-            score += value;
-            UpdateScoreText();
-        }
+    public void NewGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // iniciar na primeira fase
+    }
 
-        public void SetScore(int value)
-        {
-            PlayerPrefs.SetInt(scoreKey, value);
-        }
+    public void SetGameOver(bool value)
+    {
+        GameOverPanel.SetActive(value);
+    }
 
-        private void UpdateScoreText()
-        {
-            scoreText.text = score.ToString();
-        }
+    public void SetVictory(bool value)
+    {
+        VictoryPanel.SetActive(value);
+    }
 
-        public void NewGame()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // iniciar na primeira fase
-        }
+    public void ReloadGame(bool value)
+    {
+        SetScore(Score);
+        FindObjectOfType<Player>().Live();
+        FindObjectOfType<NextLevelPoint>().RestartLevelPoint();
+        FindObjectOfType<LevelGenerator>().GetComponent<LevelGenerator>().ExecuteScript();
+    }
 
-        public void SetGameOver(bool value)
-        {
-            gameOverPanel.SetActive(value);
-        }
-
-        public void SetVictory(bool value)
-        {
-            victoryPanel.SetActive(value);
-        }
-
-        public void ReloadGame(bool value)
-        {
-            SetScore(score);
-            SetGameOver(false);
-            FindObjectOfType<LevelGenerator>().GetComponent<LevelGenerator>().ExecuteScript();
-        }
-
-        public int GetCurrentLevel()
-        {
-            return currentLevel;
-        }
+    public int GetCurrentLevel()
+    {
+        return currentLevel;
+    }
     
-        public void AddCurrentLevel()
-        {
-            currentLevel += 1;
-        }
+    public void AddCurrentLevel()
+    {
+        currentLevel += 1;
+    }
 
-        public void GoToScene(string value)
-        {
-            SceneManager.LoadScene(value);
-        }
+    public void GoToScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }

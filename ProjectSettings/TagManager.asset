@@ -7,8 +7,6 @@ TagManager:
   - score
   - trap
   - Collectable
-  - enemy
-  - NextLevel
   layers:
   - Default
   - TransparentFX

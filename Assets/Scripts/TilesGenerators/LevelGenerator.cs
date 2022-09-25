@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
@@ -11,11 +13,11 @@ namespace TilesGenerators
 
         public Tilemap tilemap;
         public RuleTile tile;
-        private const int Width = 65;
-        private const int Height = 34;
+        public const int Width = 65;
+        public const int Height = 34;
 
         // how dense the initial grid is with living cells
-        private const float ChanceToStartAlive = 0.4f;
+        public const float ChanceToStartAlive = 0.4f;
 
         // number of neighbours that cause a alive cell to become dead
         public int deathLimit = 4;
@@ -59,25 +61,15 @@ namespace TilesGenerators
         {
             ConvertJsonToInputData();
             InitializeObjectsPerLevel();
-            print(deathLimit);
-            deathLimit = UpdateVariables(deathLimitToLevelsToLevels);
-            print(deathLimit);
-            print(birthLimit);
-            birthLimit = UpdateVariables(birthLimitToLevels);
-            print(birthLimit);
-            print(numberOfSteps);
-            numberOfSteps = UpdateVariables(numberOfStepsToLevels);
-            print(numberOfSteps);
+            deathLimit = UpdateVariables(deathLimitToLevelsToLevels, deathLimit);
+            birthLimit = UpdateVariables(birthLimitToLevels, birthLimit);
+            numberOfSteps = UpdateVariables(numberOfStepsToLevels, numberOfSteps);
             GenerateMap();
             sr = background.GetComponent<SpriteRenderer>();
-            DestroyObjects("Collectable");
-            DestroyObjects("enemy");
-            DestroyObjects("Player");
-            DestroyObjects("NextLevel");
-            Spawn(spawnPoolCollectables, spawnsCollectableToLevels);
-            Spawn(spawnPoolEnemies, spawnsEnemyToLevels);
-            GenerateObjects(player);
-            GenerateObjects(exit, true);
+            Spawn(spawnPoolCollectables, spawnsCollectableToLevels, "Collectable");
+            Spawn(spawnPoolEnemies, spawnsEnemyToLevels, "enemy");
+            // GenerateObjects(player);
+            GenerateObjects(exit);
         }
 
         #region CellularAutomataAlgorithm
@@ -193,9 +185,10 @@ namespace TilesGenerators
 
         #region General
 
-        private int UpdateVariables(IReadOnlyList<int> valueToLevel)
+        private int UpdateVariables(IReadOnlyList<int> valueToLevel, int variable)
         {
-            return valueToLevel[GameController.GameController.instance.GetCurrentLevel()];
+            variable = valueToLevel[GameController.instance.GetCurrentLevel()];
+            return variable;
         }
         
         private void ConvertJsonToInputData()
@@ -257,11 +250,14 @@ namespace TilesGenerators
 
         # region Spawning
 
-        private void Spawn(IReadOnlyList<GameObject> pool, IReadOnlyList<int> spawnToLevels)
+        private void Spawn(IReadOnlyList<GameObject> pool, IReadOnlyList<int> spawnToLevels, string tagValue)
         {
-            var numberToSpawn = spawnToLevels[GameController.GameController.instance.GetCurrentLevel()];
-            for (var i = 0; i < numberToSpawn; i++)
+            DestroyObjects(tagValue);
+
+            int numberToSpawn = spawnToLevels[GameController.instance.GetCurrentLevel()];
+            for (int i = 0; i < numberToSpawn; i++)
             {
+                
                 var randomItem = Random.Range(0, pool.Count);
                 var toSpawn = pool[randomItem];
 
@@ -269,25 +265,16 @@ namespace TilesGenerators
             }
         }
 
-        private Vector2 GenerateNewPosition(bool wideObject = false)
+        private Vector2 GenerateNewPosition()
         {
-            if (wideObject)
-            {
-                var screenX = Random.Range(-13f, 13f);
-                var screenY = Random.Range(-5f, 5f);
-                return new Vector2(screenX, screenY);
-            }
-            else
-            {
-                var screenX = Random.Range(-16f, 16f);
-                var screenY = Random.Range(-8f, 8f);
-                return new Vector2(screenX, screenY);
-            }
+            var screenX = Random.Range(-16f, 16f);
+            var screenY = Random.Range(-8f, 8f);
+            return new Vector2(screenX, screenY);
         }
 
-        private void GenerateObjects(GameObject toSpawn, bool wideObject = false)
+        private void GenerateObjects(GameObject toSpawn)
         {
-            var screenPos = GenerateNewPosition(wideObject);
+            var screenPos = GenerateNewPosition();
             var cantInstantiate = VerifyCollision(screenPos);
             if (!cantInstantiate)
             {

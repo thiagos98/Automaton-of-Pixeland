@@ -16,7 +16,7 @@ public class CollectableController : MonoBehaviour
         if (col.CompareTag("Collectable"))
         {
             Destroy(col.gameObject);
-            GameController.GameController.instance.AddScore(FruitScore);
+            GameController.instance.AddScore(FruitScore);
             var collectedEffectGameObject = Instantiate(collectedEffect, transform.position, Quaternion.identity);
             collectSoundEffect.Play();
             Destroy(collectedEffectGameObject, 1f);
