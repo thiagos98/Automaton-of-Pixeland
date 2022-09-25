@@ -34,6 +34,7 @@ namespace GameController
             instance = this;
             score = CurrentScore;
             UpdateScoreText();
+            currentLevelText.text = (currentLevel + 1).ToString();
         }
 
         private void LoadFromJson()
@@ -71,6 +72,7 @@ namespace GameController
         public void SetVictory(bool value)
         {
             victoryPanel.SetActive(value);
+            Time.timeScale = 0;
         }
 
         public void ReloadGame(bool value)
@@ -88,6 +90,7 @@ namespace GameController
         public void AddCurrentLevel()
         {
             currentLevel += 1;
+            currentLevelText.text = (currentLevel + 1).ToString();
         }
 
         public void GoToScene(string value)

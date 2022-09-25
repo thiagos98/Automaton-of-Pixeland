@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1efee04b8a0b2ee4dad6ce2c332eb0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
-  JumpForce: 5.3
+  speed: 5
+  jumpForce: 5.5
   jumpSoundEffect: {fileID: 7529870436177188260}
   deathSoundEffect: {fileID: 2620531203429747034}
 --- !u!114 &4686092730490870627

@@ -110,7 +110,7 @@ namespace Player
                     if (doubleJump)
                     {
                         jumpSoundEffect.Play();
-                        ImpulseForce(jumpForce / 1.5f);
+                        ImpulseForce(jumpForce / 1.25f);
                         doubleJump = false;
                     }
                 }
