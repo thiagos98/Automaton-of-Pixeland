@@ -45,7 +45,7 @@ public class MaskDude : MonoBehaviour
 
             if (height > 0f && !playerDestroyed)
             {
-                col.gameObject.GetComponent<Player>().ImpulseForce(5f);
+                col.gameObject.GetComponent<Player.Player>().ImpulseForce(5f);
                 anim.SetTrigger("die");
                 speed = 0f;
                 rb.bodyType = RigidbodyType2D.Kinematic;
@@ -54,7 +54,7 @@ public class MaskDude : MonoBehaviour
             else
             {
                 playerDestroyed = true;
-                col.gameObject.GetComponent<Player>().Die();
+                col.gameObject.GetComponent<Player.Player>().Die();
             }
         }
     }
