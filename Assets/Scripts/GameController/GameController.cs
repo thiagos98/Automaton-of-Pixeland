@@ -13,6 +13,8 @@ namespace GameController
 
         [FormerlySerializedAs("ScoreText")] public Text scoreText;
         public Text currentLevelText;
+        [FormerlySerializedAs("reloadLevelButton")] public Button pauseLevelButton;
+        public GameObject pauseLevelPanel;
 
         [FormerlySerializedAs("GameOverPanel")] public GameObject gameOverPanel;
         [FormerlySerializedAs("VictoryPanel")] public GameObject victoryPanel;
@@ -36,6 +38,10 @@ namespace GameController
             score = CurrentScore;
             UpdateScoreText();
             currentLevelText.text = (currentLevel + 1).ToString();
+            if (!pauseLevelButton.IsActive() && SceneManager.GetActiveScene().buildIndex != 0)
+            {
+                SetPauseLevelButton(true);
+            }
         }
 
         private void LoadFromJson()
@@ -76,11 +82,23 @@ namespace GameController
             Time.timeScale = 0;
         }
 
-        public void ReloadGame(bool value)
+        public void SetPauseLevelButton(bool value)
+        {
+            pauseLevelButton.gameObject.SetActive(value);
+        }
+
+        public void SetPauseLevelPanel(bool value)
+        {
+            Time.timeScale = value ? 0f : 1f;
+            pauseLevelPanel.gameObject.SetActive(value);
+        }
+
+        public void ReloadGame()
         {
             SetScore(score);
             SetGameOver(false);
             FindObjectOfType<LevelGenerator>().GetComponent<LevelGenerator>().ExecuteScript();
+            SetPauseLevelButton(true);
         }
 
         public int GetCurrentLevel()

@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
+﻿using UnityEngine;
 
 public class NextLevelPoint : MonoBehaviour
 {
@@ -12,11 +9,12 @@ public class NextLevelPoint : MonoBehaviour
             GameController.GameController.instance.AddCurrentLevel();
             if (GameController.GameController.instance.GetCurrentLevel() < PlayerPrefs.GetInt("LenghtGame"))
             {
-                GameController.GameController.instance.ReloadGame(true);    
+                GameController.GameController.instance.ReloadGame();
             }
             else
             {
                 GameController.GameController.instance.SetVictory(true);
+                GameController.GameController.instance.SetPauseLevelButton(false);
             }
         }
     }
