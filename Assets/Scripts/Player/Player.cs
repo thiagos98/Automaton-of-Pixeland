@@ -127,6 +127,7 @@ namespace Player
             deathSoundEffect.Play();
             sr.enabled = false;
             GameController.GameController.instance.SetGameOver(true);
+            GameController.GameController.instance.SetPauseLevelButton(false);
         }
     }
 }
