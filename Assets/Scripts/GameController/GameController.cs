@@ -44,6 +44,11 @@ namespace GameController
             }
         }
 
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
+
         private void LoadFromJson()
         {
             string json = File.ReadAllText(Application.dataPath + "/Resources/Files/seed.json");

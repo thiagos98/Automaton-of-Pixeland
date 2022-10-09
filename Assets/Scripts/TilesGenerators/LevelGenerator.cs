@@ -284,24 +284,14 @@ namespace TilesGenerators
         {
             var screenPos = GenerateNewPosition(wideObject);
             var cantInstantiate = VerifyCollisionInTilemap(screenPos);
-            if (!cantInstantiate)
+            while (cantInstantiate)
             {
-                var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
-                newObj.transform.SetParent(gameObject.transform);
-            }
-            else
-            {
-                screenPos = GenerateNewPosition();
+                screenPos = GenerateNewPosition(wideObject);
                 cantInstantiate = VerifyCollisionInTilemap(screenPos);
-                while (cantInstantiate)
-                {
-                    screenPos = GenerateNewPosition();
-                    cantInstantiate = VerifyCollisionInTilemap(screenPos);
-                }
-
-                var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
-                newObj.transform.SetParent(gameObject.transform);
             }
+
+            var newObj = Instantiate(toSpawn, screenPos, toSpawn.transform.rotation);
+            newObj.transform.SetParent(gameObject.transform);
         }
 
         #endregion
